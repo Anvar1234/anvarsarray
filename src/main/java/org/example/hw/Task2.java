@@ -1,0 +1,117 @@
+package org.example.hw;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+/**
+ * What's wrong with to {@link Task2#calculate(char, double...)} method code?
+ * You'll need to correct it and add square root calculation.
+ */
+public class Task2 {
+
+    static final Map<Character, Countable> countableMap = new HashMap<>();
+    static final Map<Character, Integer> operatorsAccount = new HashMap<>();
+
+    static {
+        //1.так как у интерфейса Countable лишь один метод, то мы можем с помощью лямбда-выражения класть в значение мапы
+        //метод с указанными реализациями просто в строку: args -> args[0] + args[1]). Java знает, что раз метод один, то
+        //эти аргументы принадлежат этому методу. Если методов больше, то конкретный метод можно положить через анонимный
+        //класс через new Countable.
+        //2.В интерфейсе Countable в сигнатуре метода calculate принимается множественный ввод (?), по факту это МАССВ
+        // аргументов (double... args), поэтому в
+        //реализациях этого метода ниже в мапе мы указываем входящие значения по индексу массива, то есть например,
+        //если мы передаем в метод два значения, то первое будет args[0], а второе - args[1]. А если одно значение, то
+        //с ним работаем как args[0].
+        countableMap.put('+', args -> args[0] + args[1]);
+        countableMap.put('-', args -> args[0] - args[1]);
+        countableMap.put('*', args -> args[0] * args[1]);
+//        countableMap.put('/', new Countable() {
+//            @Override
+//            public double countableCalculate(double... args) {
+//                if (args[1] == 0) throw new ArithmeticException("Divide by zero");
+//                return args[0] / args[1];
+//            }
+//        });
+        countableMap.put('/', args -> Optional.of(args[0] / args[1]).orElseThrow(() -> new ArithmeticException("Divide by zero")));
+        countableMap.put('&', args -> Math.sqrt(args[0]));
+
+        operatorsAccount.put('+', 2);
+        operatorsAccount.put('-', 2);
+        operatorsAccount.put('*', 2);
+        operatorsAccount.put('/', 2);
+        operatorsAccount.put('&', 1);
+    }
+
+
+////Было так:
+//    public static void main(String[] args) { //метод без Optional
+//        Task2 task2 = new Task2();
+//        task2.calculate('-', 9, 2); //а как сделать так, чтобы второй операнд было необязательно вводить и
+//        // чтобы автоматически выбирался нужный метод - перегрузка?
+//    }
+//    public double calculate(char operator, double a, double b) {
+//        double result = countableMap.get(operator).countableCalculate(a, b);
+//        System.out.printf("Result: %s", result);
+//        return result;
+//    }
+
+
+    // Вариант без Optional
+    // не введен ни один операнд, вместо операнда приходит null, кол-во операндов не соответствует оператору,
+    // приходит не верный оператор
+
+//    public static void main(String[] args) { //метод без Optional
+//        Task2 task2 = new Task2();
+//        task2.calculate('_', 9);
+//    }
+
+//    public double calculate(char operator, double... arguments) { //метод без Optional
+//        if(arguments == null || !operatorsAccount.containsKey(operator)) {
+//            System.out.println("Не верный оператор или количество операндов");
+//            return 0;
+//        }
+//        if (arguments.length == 2 && arguments.length == operatorsAccount.get(operator)) {
+//            double result = countableMap.get(operator).countableCalculate(arguments[0], arguments[1]);
+//            System.out.printf("Result: %s", result);
+//            return result;
+//        }
+//        if (arguments.length == 1 && arguments.length == operatorsAccount.get(operator)) {
+//            double result = countableMap.get(operator).countableCalculate(arguments[0]);
+//            System.out.printf("Result: %s", result);
+//            return result;
+//        }
+//
+//        System.out.println("Не верный оператор или количество операндов");
+//        return 0;
+//    }
+
+
+    // Вариант с Optional
+    // не введен ни один операнд, вместо операнда приходит null, кол-во операндов не соответствует оператору,
+    // приходит не верный оператор.
+    public static void main(String[] args) { //метод с Optional
+        Task2 task2 = new Task2();
+        Optional<Double> resultOptional = task2.calculate('&', 10);
+
+        resultOptional.ifPresentOrElse(x -> System.out.printf("Результат: %s", x),
+                () -> System.out.println("Не верный оператор или количество операндов"));
+
+    }
+    public Optional<Double> calculate(char operator, double... arguments) {//метод с Optional
+        if(arguments == null || !operatorsAccount.containsKey(operator)) return Optional.empty();
+        if (arguments.length == 2 && arguments.length == operatorsAccount.get(operator)) {
+            double result = countableMap.get(operator).countableCalculate(arguments[0], arguments[1]);
+            return Optional.of(result);
+        }
+        if (arguments.length == 1 && arguments.length == operatorsAccount.get(operator)) {
+            double result = countableMap.get(operator).countableCalculate(arguments[0]);
+            return Optional.of(result);
+        }
+        return Optional.empty();
+    }
+}
+
+interface Countable {
+    double countableCalculate(double... args);
+}
