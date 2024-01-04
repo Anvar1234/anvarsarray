@@ -1,5 +1,6 @@
 package org.example.hw.quicksort;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -7,61 +8,52 @@ public class AnvarQuickSort {
 
     public static void main(String[] args) {
         AnvarQuickSort anvarQuickSort = new AnvarQuickSort();
-        Integer[] integersArray = new Integer[]{1, 10, 5, 12, 11, 2};
-        System.out.println(integersArray);
-        System.out.println(Arrays.toString(anvarQuickSort.divisionArrays(integersArray)));
+        Integer[] integersArray = new Integer[]{5, 10, 2, 9, -1, 0, 99};
+        System.out.println(Arrays.toString(integersArray));
+        System.out.println(Arrays.toString(anvarQuickSort.quickSort(integersArray)));
     }
 
     //в данном методе происходит разделение массивов и перемещение элементов относительно пивота.
-    //опорный элемент определим как случайный, чтобы не было предопределенности (типа только правый, левый).
-    public Integer[] divisionArrays(Integer[] insertArray) {
-        //int startIndex, int endIndex
-        if (insertArray.length < 2) return insertArray; //базовый случай, выход из рекурсии.
-        //определяем опорный элемент:
+    //опорный элемент определим как случайный.
+    //проблема, если брать например всегда первый или последний - он может быть всегда меньше всех элементов и будет бесконечная рекурсия.
+    //проблема в случайном - что если есть одинаковые числа в массиве, то они и останутся в бесконечной рекурсии.
+    public Integer[] quickSort(Integer[] insertArray) {
+        if (insertArray.length < 2) return insertArray;
+
         Random random = new Random();
-        int randomPivotIndex = random.nextInt(0, insertArray.length);//включительно или нет в Джава?
-        int pivotElem = insertArray[randomPivotIndex];
-        System.out.printf("Pivot = %s \n", pivotElem);
-        insertArray[randomPivotIndex] = pivotElem;//входящий массив будет и результирующим.
+        int randomPivotIndex = random.nextInt(0, insertArray.length);
+        int pivot = insertArray[randomPivotIndex];
 
-        int leftLength = randomPivotIndex;//длина левого массива (не включает элемент, находящийся под pivotIndex).
-        // То есть если длина инсертмассива 4, то пивотиндекс выпал например 2, тогда длина левого массива == 2.
-        int rightLength = insertArray.length - leftLength - 1;//длина правого массива, этот массив тоже не включает пивот элемент.
-//итого у нас будет 3 массива: входящий, он же результирующий, и левый с правым массивы.
-        Integer[] leftArray = new Integer[leftLength];//создаем и копируем левый массив.
-        System.arraycopy(insertArray, 0, leftArray, 0, randomPivotIndex);
-        Integer[] rightArray = new Integer[rightLength];//создаем и копируем правый массив.
-        System.arraycopy(insertArray, randomPivotIndex + 1, rightArray, 0, insertArray.length - leftLength - 1);
+        System.out.println("PivotElem = " + pivot);
 
-        //пропишем указатели:
-        int leftIndex = 0;
-        int rightIndex = rightLength - 1;
+        //пока сделаю с использованием динамических массивов типа ArrayList.
+        ArrayList<Integer> leftArrayList = new ArrayList<>();
+        ArrayList<Integer> rightArrayList = new ArrayList<>();
 
-        //поиск элемента большего чем пивот в левом массиве, а также элемента меньшего пивота в правом массиве, и далее их свап.
-        while (leftIndex < randomPivotIndex && rightIndex != 0) {
-            if (leftArray[leftIndex] < pivotElem) {
-                insertArray[leftIndex] = leftArray[leftIndex++];
-            }
-            if (rightArray[rightIndex] >= pivotElem) {
-                insertArray[leftLength + 1 + rightIndex] = rightArray[rightIndex--];
-            }
 
-            //свап элементов.
-            if (leftArray[leftIndex] > pivotElem && rightArray[rightIndex] < pivotElem) {
-                //написать вспомогательный метод для свапа
-                int temp = leftArray[leftIndex];
-                leftArray[leftIndex] = rightArray[rightIndex];
-                rightArray[rightIndex] = temp;
-            }
+        //Условие, что если элемент меньше пивота, то идет в лефт, а если больше или равен - в райт:
+        for (Integer intElem : insertArray) {
+            if (intElem < pivot) leftArrayList.add(intElem);
+            if (intElem >= pivot) rightArrayList.add(intElem);
         }
-        return insertArray;
+        System.out.println("leftArrayList = " + leftArrayList);
+        System.out.println("rightArrayList = " + rightArrayList);
+
+        Integer[] leftArray = leftArrayList.toArray(new Integer[leftArrayList.size()]);
+        Integer[] rightArray = rightArrayList.toArray(new Integer[rightArrayList.size()]);
+
+        leftArray = quickSort(leftArray);
+        rightArray = quickSort(rightArray);
+
+        Integer[] resultArray = new Integer[leftArray.length + rightArray.length];
+        System.arraycopy(leftArray, 0, resultArray, 0, leftArray.length);
+        System.arraycopy(rightArray, 0, resultArray, leftArray.length, rightArray.length);
+
+        return resultArray;
+
+
+
     }
-
-    //в данном методе происходит сортировка методом рекурсии.
-//    public Integer[] quickSortArrays(Integer[] insertArray) {
-//        if ()
-//    }
-
 }
 
 

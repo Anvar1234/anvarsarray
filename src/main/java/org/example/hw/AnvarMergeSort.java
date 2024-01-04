@@ -2,12 +2,12 @@ package org.example.hw;
 
 import java.util.Arrays;
 
-public class MyMergeSort {
+public class AnvarMergeSort {
 
     public static void main(String[] args) {
-        MyMergeSort myMergeSort = new MyMergeSort();
+        AnvarMergeSort anvarMergeSort = new AnvarMergeSort();
         Integer[] myArray = new Integer[]{-1, 3, 0, -1, 4, 1};
-        System.out.println(Arrays.toString(myMergeSort.mergeSort(myArray)));
+        System.out.println(Arrays.toString(anvarMergeSort.mergeSort(myArray)));
     }
 
     public Integer[] mergeSort(Integer[] array){
