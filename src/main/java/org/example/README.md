@@ -12,7 +12,7 @@
 
 ## Ответы и пояснения:
 **Ответ по №1 (см. класс Task2):**  
-Task2: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/Task2.java
+Task2: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/Task2.java  
 1. Если я правильно разобрался в теме, то Optional класс нужно использовать в случае, если null в принципе 
 допускается, например, в случае поиска по БД метод может вернуть null, если объекта не найдено, или в метод может 
 прилететь null в ходе нормального выполнения программы. Если null недопустим в ходе выполнения программы, то это ошибка, 
@@ -39,7 +39,7 @@ Task2: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/ex
 
 
 **Ответ по №2 (см. класс FuncInterfaceANDLambdas):**  
-FuncInterfaceANDLambdas: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/FuncInterfaceANDLambdas.java
+FuncInterfaceANDLambdas: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/FuncInterfaceANDLambdas.java  
 Ознакомился с функциональными интерфейсами, порешал простенькие задачки с лямбдами.
 
 **Ответ по №3:**  
@@ -51,8 +51,8 @@ FuncInterfaceANDLambdas: https://github.com/Anvar1234/anvarsarray/blob/master/sr
 было инициализированно и подгружено.
 
 **Ответ по №5 (см. классы AnvarQuickSort и AnvarQuickSort2):**  
-AnvarQuickSort: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/quicksort/AnvarQuickSort.java
-AnvarQuickSort2: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/quicksort/AnvarQuickSort2.java
+AnvarQuickSort: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/quicksort/AnvarQuickSort.java  
+AnvarQuickSort2: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/quicksort/AnvarQuickSort2.java  
 Сделал быструю сортировку сначала по своему (AnvarQuickSort, через создание дополнительных двух массивов), там 
 по тупому использовал внутри списки (АррайЛисты), так как массивы неизменяемы. Скорее всего можно было как-то через 
 массивы все же сделать.  
@@ -62,7 +62,7 @@ AnvarQuickSort2: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/j
 
 **Ответ по №6 (см. класс AnvarMergeSort и MergeSort ):**  
 MergeSort: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/anvarsarray/impl/MergeSort.java
-AnvarMergeSort: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/AnvarMergeSort.java
+AnvarMergeSort: https://github.com/Anvar1234/anvarsarray/blob/master/src/main/java/org/example/hw/AnvarMergeSort.java  
 Сделал без подглядываний, получилось вроде грубее, чем при совместной работе, но главное, что получилось. Запушил также 
 класс MergeSort - это мы делали на созвоне, для сравнения с моим написание AnvarMergeSort, может будет видно, что именно 
 мне нужно подтянуть.
