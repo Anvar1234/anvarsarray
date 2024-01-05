@@ -24,20 +24,15 @@ public class AnvarQuickSort {
         int randomPivotIndex = random.nextInt(0, insertArray.length);
         int pivot = insertArray[randomPivotIndex];
 
-        System.out.println("PivotElem = " + pivot);
-
         //пока сделаю с использованием динамических массивов типа ArrayList.
         ArrayList<Integer> leftArrayList = new ArrayList<>();
         ArrayList<Integer> rightArrayList = new ArrayList<>();
-
 
         //Условие, что если элемент меньше пивота, то идет в лефт, а если больше или равен - в райт:
         for (Integer intElem : insertArray) {
             if (intElem < pivot) leftArrayList.add(intElem);
             if (intElem >= pivot) rightArrayList.add(intElem);
         }
-        System.out.println("leftArrayList = " + leftArrayList);
-        System.out.println("rightArrayList = " + rightArrayList);
 
         Integer[] leftArray = leftArrayList.toArray(new Integer[leftArrayList.size()]);
         Integer[] rightArray = rightArrayList.toArray(new Integer[rightArrayList.size()]);
@@ -50,9 +45,6 @@ public class AnvarQuickSort {
         System.arraycopy(rightArray, 0, resultArray, leftArray.length, rightArray.length);
 
         return resultArray;
-
-
-
     }
 }
 
